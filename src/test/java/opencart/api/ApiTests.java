@@ -8,12 +8,11 @@ import opencart.bo.ApiBO;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-import java.io.IOException;
-import java.io.InputStream;
+import opencart.utils.ConfigLoader;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
-import java.util.Properties;
 
 public class ApiTests {
     private ApiBO apiBO;
@@ -41,14 +40,7 @@ public class ApiTests {
     public void setUp() {
         apiBO = new ApiBO();
 
-        Properties config = new Properties();
-        try (InputStream is = getClass().getClassLoader().getResourceAsStream("config.properties")) {
-            if (is != null)
-                config.load(is);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        baseUrl = config.getProperty("base.url", "http://localhost/opencart/");
+        baseUrl = ConfigLoader.getInstance().getProperty("base.url", "http://localhost/opencart/");
 
         RestAssured.config = RestAssuredConfig.config()
                 .httpClient(HttpClientConfig.httpClientConfig()

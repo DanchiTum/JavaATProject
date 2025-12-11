@@ -1,5 +1,6 @@
 package opencart.pages;
 
+import opencart.core.WebElementWrapper;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -11,16 +12,16 @@ public class CartPage extends BasePage {
     private List<WebElement> cartItems;
 
     @FindBy(css = "#content form table")
-    private WebElement cartTable;
+    private WebElementWrapper cartTable;
 
     @FindBy(css = ".buttons .pull-right a")
-    private WebElement checkoutButton;
+    private WebElementWrapper checkoutButton;
 
     @FindBy(css = "#content p")
-    private WebElement emptyCartMessage;
+    private WebElementWrapper emptyCartMessage;
 
     @FindBy(css = "a[href*='route=checkout/checkout']")
-    private WebElement proceedToCheckout;
+    private WebElementWrapper proceedToCheckout;
 
     public CartPage open() {
         navigateTo("index.php?route=checkout/cart");
@@ -36,11 +37,11 @@ public class CartPage extends BasePage {
     }
 
     public boolean isCartEmpty() {
-        return wrap(emptyCartMessage).safeGetText().contains("empty");
+        return emptyCartMessage.safeGetText().contains("empty");
     }
 
     public void proceedToCheckout() {
-        wrap(checkoutButton).waitAndClick();
+        checkoutButton.waitAndClick();
     }
 
     public boolean hasItems() {

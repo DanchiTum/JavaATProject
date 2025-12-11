@@ -1,13 +1,11 @@
 package opencart.db;
 
 import opencart.api.models.Product;
+import opencart.utils.ConfigLoader;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 public class DatabaseHelper {
     private final String url;
@@ -16,26 +14,14 @@ public class DatabaseHelper {
     private final String prefix;
 
     public DatabaseHelper() {
-        Properties config = loadConfig();
-        String host = config.getProperty("db.host", "localhost");
-        String port = config.getProperty("db.port", "3306");
-        String dbName = config.getProperty("db.name", "opencart_db");
+        String host = ConfigLoader.getInstance().getProperty("db.host", "localhost");
+        String port = ConfigLoader.getInstance().getProperty("db.port", "3306");
+        String dbName = ConfigLoader.getInstance().getProperty("db.name", "opencart_db");
 
         this.url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
-        this.user = config.getProperty("db.user", "opencart_user");
-        this.password = config.getProperty("db.password", "0960");
-        this.prefix = config.getProperty("db.prefix", "oc_");
-    }
-
-    private Properties loadConfig() {
-        Properties props = new Properties();
-        try (InputStream is = getClass().getClassLoader().getResourceAsStream("config.properties")) {
-            if (is != null)
-                props.load(is);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return props;
+        this.user = ConfigLoader.getInstance().getProperty("db.user", "opencart_user");
+        this.password = ConfigLoader.getInstance().getProperty("db.password", "0960");
+        this.prefix = ConfigLoader.getInstance().getProperty("db.prefix", "oc_");
     }
 
     private Connection getConnection() throws SQLException {

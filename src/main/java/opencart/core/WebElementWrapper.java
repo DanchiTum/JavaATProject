@@ -12,10 +12,14 @@ public class WebElementWrapper {
     private final WebDriver driver;
     private final WebDriverWait wait;
 
-    public WebElementWrapper(WebElement element) {
+    public WebElementWrapper(WebDriver driver, WebElement element) {
         this.element = element;
-        this.driver = DriverPool.getDriver();
+        this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    }
+
+    public WebElementWrapper(WebElement element) {
+        this(DriverPool.getDriver(), element);
     }
 
     public static WebElementWrapper wrap(WebElement element) {

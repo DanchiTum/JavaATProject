@@ -1,6 +1,7 @@
 package opencart.pages;
 
 import org.openqa.selenium.By;
+import opencart.core.WebElementWrapper;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,16 +14,16 @@ public class SearchPage extends BasePage {
     private List<WebElement> searchResults;
 
     @FindBy(css = "#content h1")
-    private WebElement pageTitle;
+    private WebElementWrapper pageTitle;
 
     @FindBy(css = "#content p")
-    private WebElement noResultsMessage;
+    private WebElementWrapper noResultsMessage;
 
     @FindBy(id = "input-search")
-    private WebElement searchInput;
+    private WebElementWrapper searchInput;
 
     @FindBy(id = "button-search")
-    private WebElement searchButton;
+    private WebElementWrapper searchButton;
 
     public SearchPage open(String query) {
         navigateTo("index.php?route=product/search&search=" + query);
@@ -38,7 +39,7 @@ public class SearchPage extends BasePage {
     }
 
     public String getPageTitle() {
-        return wrap(pageTitle).safeGetText();
+        return pageTitle.safeGetText();
     }
 
     public ProductPage clickProduct(int index) {

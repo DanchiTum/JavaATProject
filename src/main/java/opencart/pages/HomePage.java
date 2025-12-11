@@ -1,5 +1,6 @@
 package opencart.pages;
 
+import opencart.core.WebElementWrapper;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -8,10 +9,10 @@ import java.util.List;
 public class HomePage extends BasePage {
 
     @FindBy(name = "search")
-    private WebElement searchInput;
+    private WebElementWrapper searchInput;
 
     @FindBy(css = "button.btn.btn-light.btn-lg")
-    private WebElement searchButton;
+    private WebElementWrapper searchButton;
 
     @FindBy(css = "#content .product-layout")
     private List<WebElement> featuredProducts;
@@ -20,10 +21,10 @@ public class HomePage extends BasePage {
     private List<WebElement> menuItems;
 
     @FindBy(id = "cart")
-    private WebElement cartButton;
+    private WebElementWrapper cartButton;
 
     @FindBy(css = "#cart .dropdown-menu")
-    private WebElement cartDropdown;
+    private WebElementWrapper cartDropdown;
 
     public HomePage open() {
         navigateTo("");
@@ -31,8 +32,8 @@ public class HomePage extends BasePage {
     }
 
     public SearchPage search(String query) {
-        wrap(searchInput).waitAndSendKeys(query);
-        wrap(searchButton).waitAndClick();
+        searchInput.waitAndSendKeys(query);
+        searchButton.waitAndClick();
         return new SearchPage();
     }
 
@@ -48,10 +49,10 @@ public class HomePage extends BasePage {
     }
 
     public void openCart() {
-        wrap(cartButton).waitAndClick();
+        cartButton.waitAndClick();
     }
 
     public boolean isCartDropdownVisible() {
-        return wrap(cartDropdown).isDisplayedSafe();
+        return cartDropdown.isDisplayedSafe();
     }
 }
